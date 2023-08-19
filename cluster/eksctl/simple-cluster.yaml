@@ -5,12 +5,23 @@ metadata:
   name: simplecluster
   region: ap-southeast-1
 
-nodeGroups:
+addons:
+
+
+
+managedNodeGroups:
 - name: ng-small
   kubeletExtraConfig:
     clusterDNS: ["169.254.20.10", "172.20.0.10"]
   instanceType: m5.large
-  desiredCapacity: 1
+  spot: true
+  minSize: 2
+  maxSize: 5
+  desiredCapacity: 2
+  amiFamily: Bottlerocket
+  bottlerocket:
+    enableAdminContainer: true
+  labels: {type: spot}
 
 cloudWatch:
   clusterLogging:
